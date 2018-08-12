@@ -1,0 +1,20 @@
+12/10/2018
+
+11:54
+Tentando produzir alguma coisa com as informações que obtive até agora do curso...
+Nesse momento estou tentando criar um formulário (ops, digo Activity) e uma das
+informações que será selecionada é uma data. Lembro que em Delphi (ou era VB)
+havia com componente chamado "drop Down calendar" (um combo box que abria
+um pequeno calendário). Vi que no Android existe essa possibilidade
+(DatePickerDialog) porém um pouco mais trabalhoso...
+
+É um mundo novo, estou tentando me acostumar...
+
+13:07
+1 ano depois... Utilizando os exemplos daqui (https://developer.android.com/guide/topics/ui/controls/pickers)
+fiz algo que retornou o que eu queria: Selecionar uma data e retorná-la no meu objeto
+Essa plataforma/linguagem é muito baseada em listeners/callbacks
+Pode ser a primeira impressão, mas achava as linguagens antigas mais práticas.
+Talvez um framework esconda essas "chatices"
+
+Vou subir esse código no git
