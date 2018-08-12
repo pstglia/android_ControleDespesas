@@ -37,13 +37,9 @@ public class DataDialog extends DialogFragment
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        Log.i("POFFO", "Dentro de onCreateDialog " + String.valueOf(day) );
-
         if (edtParam == null) {
             return null;
         }
-
-        edtParam.setText(day + "/" + month + "/" + year );
 
         // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), this, year, month, day);
@@ -52,7 +48,6 @@ public class DataDialog extends DialogFragment
     public void onDateSet(DatePicker view, int retYear, int retMonth, int retDay) {
         // Do something with the date chosen by the user
 
-        Log.i("POFFO", String.valueOf(retDay) );
         year = retYear;
         month = retMonth;
         day = retDay;

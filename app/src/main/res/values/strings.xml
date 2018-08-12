@@ -3,4 +3,7 @@
     <string name="rscNovaDespesa">Nova despesa</string>
     <string name="rscConsAdm">Consultar/Gerenciar</string>
     <string name="rscData">Data</string>
+    <string name="rscCatPrinc">Categoria Principal</string>
+    <string name="rscCatSec">Categoria Secundária</string>
+    <string name="rscValor">Valor Gasto</string>
 </resources>

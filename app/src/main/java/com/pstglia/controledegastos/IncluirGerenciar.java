@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 public class IncluirGerenciar extends AppCompatActivity {
 
     private TextView txtDataId;
@@ -27,14 +29,13 @@ public class IncluirGerenciar extends AppCompatActivity {
         newFragment = new DataDialog();
         newFragment.setEditTextParam(edtDataId);
 
-    }
+        final Calendar c = Calendar.getInstance();
+        edtDataId.setText(c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR));
 
+    }
 
     public void showDatePickerDialog(View v) {
         newFragment.show(getSupportFragmentManager(), "datePicker");
-        Log.i("POFFO", "showDatePickerDialog - Aguardando valor...");
-
-
 
     }
 

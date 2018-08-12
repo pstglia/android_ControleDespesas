@@ -18,3 +18,14 @@ Pode ser a primeira impressão, mas achava as linguagens antigas mais práticas.
 Talvez um framework esconda essas "chatices"
 
 Vou subir esse código no git
+
+15:58
+Acho que uma coisa não mudou: Sou péssimo em definir layouts de tela :)
+Acredito que esse seja um dos motivos de eu ter focado mais em scripts e
+funcionalidades sem interface
+
+O git está aqui:
+https://github.com/pstglia/android_ControleDespesas
+
+16:42
+Cansei por hoje. Agora vou assistir Netflix :)
