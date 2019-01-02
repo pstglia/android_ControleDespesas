@@ -49,7 +49,7 @@ public class DataDialog extends DialogFragment
         // Do something with the date chosen by the user
 
         year = retYear;
-        month = retMonth;
+        month = retMonth + 1;
         day = retDay;
         edtParam.setText(day + "/" + month + "/" + year );
 

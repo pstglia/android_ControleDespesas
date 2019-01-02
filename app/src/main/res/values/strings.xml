@@ -6,4 +6,6 @@
     <string name="rscCatPrinc">Categoria Principal</string>
     <string name="rscCatSec">Categoria Secundária</string>
     <string name="rscValor">Valor Gasto</string>
+    <string name="rscMsgProblemaInserir">Falha ao gravar despesa</string>
+    <string name="rscNomeDatabase">dbcontrolegastos</string>
 </resources>

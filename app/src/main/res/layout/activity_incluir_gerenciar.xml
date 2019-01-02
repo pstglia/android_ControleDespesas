@@ -6,69 +6,62 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".IncluirGerenciar"
-    tools:layout_editor_absoluteY="81dp">
-
-    <EditText
-        android:id="@+id/edtValor3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:digits="8"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtValor"
-        app:layout_constraintTop_toBottomOf="@+id/cmbCatSec" />
+    tools:layout_editor_absoluteY="73dp">
 
     <TextView
         android:id="@+id/txtDataId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
         android:text="@string/rscData"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/edtDataId" />
 
     <EditText
         android:id="@+id/edtDataId"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="date"
         android:onClick="showDatePickerDialog"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toEndOf="@+id/txtDataId"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtCatPrinc"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
         android:text="@string/rscCatPrinc"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDataId" />
+        app:layout_constraintTop_toBottomOf="@+id/edtDataId" />
 
     <Spinner
         android:id="@+id/cmbCatPrinc"
-        android:layout_width="0dp"
-        android:layout_height="22dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="171dp"
+        android:layout_height="18dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toEndOf="@+id/txtCatPrinc"
         app:layout_constraintTop_toBottomOf="@+id/edtDataId" />
 
@@ -76,9 +69,9 @@
         android:id="@+id/txtCatSec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
         android:text="@string/rscCatSec"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
@@ -87,24 +80,25 @@
 
     <Spinner
         android:id="@+id/cmbCatSec"
-        android:layout_width="0dp"
-        android:layout_height="31dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="169dp"
+        android:layout_height="20dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toEndOf="@+id/txtCatSec"
-        app:layout_constraintTop_toBottomOf="@+id/cmbCatPrinc" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCatPrinc" />
 
     <TextView
         android:id="@+id/txtValor"
-        android:layout_width="98dp"
+        android:layout_width="wrap_content"
         android:layout_height="21dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
         android:text="@string/rscValor"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
@@ -112,41 +106,76 @@
         app:layout_constraintTop_toBottomOf="@+id/txtCatSec" />
 
     <EditText
-        android:id="@+id/edtValor"
-        android:layout_width="0dp"
+        android:id="@+id/edtValorGasto"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:digits="8"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cmbCatSec" />
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toEndOf="@+id/txtValor"
+        app:layout_constraintTop_toBottomOf="@+id/txtCatSec" />
 
     <TextView
         android:id="@+id/txtCustom1"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
         android:text="MOD_SRC"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtValor" />
+        app:layout_constraintTop_toBottomOf="@+id/edtValorGasto" />
 
     <EditText
         android:id="@+id/edtCustom1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:digits="8"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:ems="10"
-        android:inputType="numberDecimal"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toEndOf="@+id/txtCustom1"
-        app:layout_constraintTop_toBottomOf="@+id/edtValor" />
+        app:layout_constraintTop_toBottomOf="@+id/edtValorGasto" />
+
+    <ImageButton
+        android:id="@+id/imgSalvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgCancelar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_save" />
+
+    <ImageButton
+        android:id="@+id/imgCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgSalvar"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
 </android.support.constraint.ConstraintLayout>
