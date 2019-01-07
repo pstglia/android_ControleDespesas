@@ -17,6 +17,9 @@ public class Database {
     private Integer id_categoria;
     private String dt_lancamento;
     private Float vl_despesa;
+    private Float vl_custom_1;
+    private Float vl_custom_2;
+    private Float vl_custom_3;
 
     // getters e settlers
     // (o mundo era um lugar mais feliz quando tudo era global...)
@@ -44,6 +47,31 @@ public class Database {
     public void setVl_despesa(Float vl_despesa) {
         this.vl_despesa = vl_despesa;
     }
+
+    public Float getVl_custom_1() {
+        return vl_custom_1;
+    }
+
+    public void setVl_custom_1(Float vl_custom_1) {
+        this.vl_custom_1 = vl_custom_1;
+    }
+
+    public Float getVl_custom_2() {
+        return vl_custom_2;
+    }
+
+    public void setVl_custom_2(Float vl_custom_2) {
+        this.vl_custom_2 = vl_custom_2;
+    }
+
+    public Float getVl_custom_3() {
+        return vl_custom_3;
+    }
+
+    public void setVl_custom_3(Float vl_custom_3) {
+        this.vl_custom_3 = vl_custom_3;
+    }
+
 
     private SQLiteDatabase vBancoHandle;
 
@@ -268,9 +296,11 @@ public class Database {
 
 
         String vCmd;
-        vCmd = "insert into despesa (dt_lancamento, id_categoria, vl_despesa) values ( ";
+        vCmd = "insert into despesa (dt_lancamento, id_categoria, vl_despesa, vl_custom_1, ";
+        vCmd = vCmd + "vl_custom_2, vl_custom_3) values ( ";
         vCmd = vCmd + "'" + getDt_lancamento() + "'," + getId_categoria() + "," ;
-        vCmd = vCmd + getVl_despesa() + ")";
+        vCmd = vCmd + getVl_despesa() + "," + getVl_custom_1()  + "," + getVl_custom_2();
+        vCmd = vCmd + "," + getVl_custom_3() + ")";
 
         try {
             pHandle.execSQL(vCmd);
@@ -282,6 +312,32 @@ public class Database {
         return true;
 
     }
+
+    // Relaciona a quantidade de campos adicionais de uma categoria
+    // Parametros:
+    // 1 - Handle de conexao com o banco
+    // 2 - Id da Categoria
+    // Retorno:
+    // String com a a qtde de campos e a lista de descrições (separados por @)
+    public String listaCamposAdicionaisCat(SQLiteDatabase pHandle, int pIdCategoria) {
+
+
+        String vCmd;
+        String vStrRet;
+
+        vStrRet="";
+        vCmd = "select qt_vl_custom, ds_custom_1, ds_custom_2, ds_custom_3 from categoria where id_categoria = " + pIdCategoria;
+        Cursor c = pHandle.rawQuery(vCmd,null);
+
+        if (c.moveToFirst()) {
+            vStrRet = c.getString(0) + "@" + c.getString(1)+ "@" + c.getString(2)+ "@" + c.getString(3) ;
+        }
+
+        c.close();
+        return vStrRet;
+
+    }
+
 
     public void queryDespesasDbg(SQLiteDatabase pHandle) {
 

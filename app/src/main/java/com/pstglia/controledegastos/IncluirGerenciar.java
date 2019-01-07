@@ -5,7 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.text.format.Time;
 import android.util.Log;
+import android.util.TimeUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,8 +23,11 @@ import android.widget.Toast;
 
 import com.pstglia.controledegastos.database.Database;
 
+import java.lang.reflect.Array;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class IncluirGerenciar extends AppCompatActivity {
 
@@ -33,6 +39,12 @@ public class IncluirGerenciar extends AppCompatActivity {
     private ImageView imgSalvar;
     private ImageView imgCancelar;
     private Database db;
+    private TextView txtCustom1;
+    private TextView txtCustom2;
+    private TextView txtCustom3;
+    private EditText edtCustom1;
+    private EditText edtCustom2;
+    private EditText edtCustom3;
 
     private Cursor vCursor2;
 
@@ -57,6 +69,13 @@ public class IncluirGerenciar extends AppCompatActivity {
         edtValorGasto = (EditText) findViewById(R.id.edtValorGasto);
         imgSalvar = (ImageView) findViewById(R.id.imgSalvar);
         imgCancelar = (ImageView) findViewById(R.id.imgCancelar);
+        txtCustom1 = (TextView) findViewById(R.id.txtCustom1);
+        txtCustom2 = (TextView) findViewById(R.id.txtCustom2);
+        txtCustom3 = (TextView) findViewById(R.id.txtCustom3);
+        edtCustom1 = (EditText) findViewById(R.id.edtCustom1);
+        edtCustom2 = (EditText) findViewById(R.id.edtCustom2);
+        edtCustom3 = (EditText) findViewById(R.id.edtCustom3);
+
 
         // Instancia a caixa de dialogo
         newFragment = new DataDialog();
@@ -108,13 +127,78 @@ public class IncluirGerenciar extends AppCompatActivity {
             }
         });
 
+        cmbCatSec.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                // Verifica se os campos customizados devem ser exibidos
+                //Check if custom fields shall be shown
+                String vRet = db.listaCamposAdicionaisCat(pHandleDb, Integer.valueOf(String.valueOf(id)));
+                txtCustom1.setVisibility(View.INVISIBLE);
+                txtCustom2.setVisibility(View.INVISIBLE);
+                txtCustom3.setVisibility(View.INVISIBLE);
+                edtCustom1.setVisibility(View.INVISIBLE);
+                edtCustom2.setVisibility(View.INVISIBLE);
+                edtCustom3.setVisibility(View.INVISIBLE);
+
+
+                String[] vRetArr = vRet.split("@");
+                int vQtdCampos = Integer.valueOf(vRetArr[0]);
+
+                if (vQtdCampos> 0 ) {
+                    txtCustom1.setVisibility(View.VISIBLE);
+                    edtCustom1.setVisibility(View.VISIBLE);
+                    txtCustom1.setText(vRetArr[1] );
+
+                    if (vQtdCampos > 1) {
+                        txtCustom2.setVisibility(View.VISIBLE);
+                        edtCustom2.setVisibility(View.VISIBLE);
+                        txtCustom2.setText(vRetArr[2] );
+                    }
+                    if (vQtdCampos > 2) {
+                        txtCustom3.setVisibility(View.VISIBLE);
+                        edtCustom3.setVisibility(View.VISIBLE);
+                        txtCustom3.setText(vRetArr[3] );
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         imgSalvar.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
 
+                                             // Valida os campos
+                                             if (edtDataId.getText().toString().isEmpty()) {
+                                                 Toast.makeText(getApplicationContext() ,R.string.rscMsgValidaData,Toast.LENGTH_SHORT).show();
+                                                 return;
+                                             }
+
+                                             if (edtValorGasto.getText().toString().isEmpty()) {
+                                                 Toast.makeText(getApplicationContext() ,R.string.rscMsgValidaValorGasto,Toast.LENGTH_SHORT).show();
+                                                 return;
+                                             }
+
                                              db.setDt_lancamento(edtDataId.getText().toString());
                                              db.setId_categoria(Integer.valueOf(String.valueOf(cmbCatSec.getSelectedItemId())));
                                              db.setVl_despesa(Float.valueOf(edtValorGasto.getText().toString()));
+
+                                             if (!edtCustom1.getText().toString().isEmpty()) {
+                                                 db.setVl_custom_1(Float.valueOf(edtCustom1.getText().toString()));
+                                             }
+                                             if (!edtCustom2.getText().toString().isEmpty()) {
+                                                 db.setVl_custom_2(Float.valueOf(edtCustom2.getText().toString()));
+                                             }
+                                             if (!edtCustom3.getText().toString().isEmpty()) {
+                                                 db.setVl_custom_3(Float.valueOf(edtCustom3.getText().toString()));
+                                             }
 
                                              if ( !db.insereDespesa(pHandleDb)) {
 
@@ -128,6 +212,13 @@ public class IncluirGerenciar extends AppCompatActivity {
                                          }
                                      }
         );
+
+        imgCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
 

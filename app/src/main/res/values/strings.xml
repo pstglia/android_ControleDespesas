@@ -8,4 +8,7 @@
     <string name="rscValor">Valor Gasto</string>
     <string name="rscMsgProblemaInserir">Falha ao gravar despesa</string>
     <string name="rscNomeDatabase">dbcontrolegastos</string>
+    <string name="rscMsgValidaData">A data precisa ser informada</string>
+    <string name="rscMsgValidaValorGasto">O valor gasto deve ser informado</string>
+
 </resources>
