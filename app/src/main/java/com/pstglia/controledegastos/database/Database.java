@@ -81,6 +81,7 @@ public class Database {
 
 
         try {
+            Log.i("CTRLGASTOSDBG","Banco de dados: " + pDatabase);
             vBancoHandle = SQLiteDatabase.openOrCreateDatabase(pDatabase,null);
 
             criaTabelas(vBancoHandle);

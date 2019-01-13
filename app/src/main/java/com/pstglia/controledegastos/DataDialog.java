@@ -4,16 +4,21 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 /**
  * Classe para exibir uma dialog e definir o retorno
  * em um objeto do tipo EditText
+ *
+ * Referência/Reference:
+ * https://stackoverflow.com/questions/11754663/android-datepicker-fragment-how-to-do-something-when-the-user-sets-a-date
  */
 public class DataDialog extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
@@ -24,9 +29,15 @@ public class DataDialog extends DialogFragment
     private int paramEditTextId;
     private EditText edtParam;
 
+    private Calendar dataSelecionada;
+
     public void setEditTextParam(EditText edt) {
 
         edtParam = edt;
+    }
+
+    public void setDataSelecionada(Calendar pCalendar) {
+        dataSelecionada = pCalendar;
     }
 
     @Override
@@ -48,10 +59,10 @@ public class DataDialog extends DialogFragment
     public void onDateSet(DatePicker view, int retYear, int retMonth, int retDay) {
         // Do something with the date chosen by the user
 
-        year = retYear;
-        month = retMonth + 1;
-        day = retDay;
-        edtParam.setText(day + "/" + month + "/" + year );
+        dataSelecionada.set(retYear,retMonth + 1,retDay);
+
+        edtParam.setText(DateUtils.formatDateTime(getActivity(), dataSelecionada.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR) );
+
 
 
     }

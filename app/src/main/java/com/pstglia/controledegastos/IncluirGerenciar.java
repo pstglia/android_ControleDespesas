@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.Log;
 import android.util.TimeUtils;
@@ -25,6 +26,7 @@ import com.pstglia.controledegastos.database.Database;
 
 import java.lang.reflect.Array;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -49,6 +51,7 @@ public class IncluirGerenciar extends AppCompatActivity {
     private Cursor vCursor2;
 
     private DataDialog newFragment;
+    private Calendar dataSelecionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +84,11 @@ public class IncluirGerenciar extends AppCompatActivity {
         newFragment = new DataDialog();
         newFragment.setEditTextParam(edtDataId);
 
+        dataSelecionada = Calendar.getInstance();
+        newFragment.setDataSelecionada(dataSelecionada);
+
         final Calendar c = Calendar.getInstance();
-        edtDataId.setText(c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH + 1) + "/" + c.get(Calendar.YEAR));
+        edtDataId.setText(DateUtils.formatDateTime(this, c.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR));
 
         // Popula o spinner de categorias principais
         // Populate the main category spinner
@@ -176,6 +182,7 @@ public class IncluirGerenciar extends AppCompatActivity {
                                          public void onClick(View v) {
 
                                              // Valida os campos
+                                             // Validate Fields
                                              if (edtDataId.getText().toString().isEmpty()) {
                                                  Toast.makeText(getApplicationContext() ,R.string.rscMsgValidaData,Toast.LENGTH_SHORT).show();
                                                  return;
@@ -186,7 +193,10 @@ public class IncluirGerenciar extends AppCompatActivity {
                                                  return;
                                              }
 
-                                             db.setDt_lancamento(edtDataId.getText().toString());
+                                             // Normaliza a data como YYYY-MM-DD
+                                             // Stores date as YYYY-MM-DD
+                                             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+                                             db.setDt_lancamento(fmt.format(dataSelecionada.getTime()));
                                              db.setId_categoria(Integer.valueOf(String.valueOf(cmbCatSec.getSelectedItemId())));
                                              db.setVl_despesa(Float.valueOf(edtValorGasto.getText().toString()));
 

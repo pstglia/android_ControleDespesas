@@ -16,8 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IncluirGerenciar">
-        </activity>
+        <activity android:name=".IncluirGerenciar"></activity>
+        <activity android:name=".activity_listar_despesas"></activity>
     </application>
 
 </manifest>
