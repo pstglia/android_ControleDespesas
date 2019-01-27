@@ -41,6 +41,9 @@ public class Principal extends AppCompatActivity {
                 d.queryDespesasDbg(pHandleDb);
                 d.closeDatabase(pHandleDb);
 
+                Intent chamar = new Intent(Principal.this,ListarDespesas.class);
+                startActivity(chamar);
+
             }
         });
 

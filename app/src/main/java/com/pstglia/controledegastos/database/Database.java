@@ -340,6 +340,39 @@ public class Database {
     }
 
 
+
+    public ArrayList<String> obtemListaDespesas(SQLiteDatabase pHandle) {
+
+
+        String vCmd;
+        String vStrDbg;
+        vCmd = "select * from despesa";
+        Cursor c = pHandle.rawQuery(vCmd,null);
+        ArrayList<String> arrListaResult;
+
+
+        arrListaResult = new ArrayList<String>();
+        if (c.moveToFirst()) {
+
+            do {
+
+                arrListaResult.add(c.getString(0));
+                arrListaResult.add(c.getString(1));
+                arrListaResult.add(c.getString(2));
+                arrListaResult.add(c.getString(3));
+                arrListaResult.add(c.getString(4));
+
+            } while (c.moveToNext());
+
+        }
+
+        c.close();
+
+        return arrListaResult;
+
+    }
+
+
     public void queryDespesasDbg(SQLiteDatabase pHandle) {
 
 
