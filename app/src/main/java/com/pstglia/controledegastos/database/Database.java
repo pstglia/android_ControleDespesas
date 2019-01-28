@@ -4,8 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.StringRes;
 import android.util.Log;
 
+import com.pstglia.controledegastos.R;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -82,6 +87,10 @@ public class Database {
 
         try {
             Log.i("CTRLGASTOSDBG","Banco de dados: " + pDatabase);
+
+            File f = new File(pDatabase);
+            f.getParentFile().mkdir();
+
             vBancoHandle = SQLiteDatabase.openOrCreateDatabase(pDatabase,null);
 
             criaTabelas(vBancoHandle);
@@ -268,6 +277,7 @@ public class Database {
     public Cursor obtemCategorias(SQLiteDatabase pHandle, int pIdCatPai) {
 
 
+        Cursor vCursor;
         ArrayList<String> vCategoriasArr = new ArrayList<String>();
 
         String vCmd;
@@ -281,8 +291,13 @@ public class Database {
         }
         vCmd = vCmd + " order by ds_categoria";
 
-
-        Cursor vCursor = pHandle.rawQuery(vCmd,null);
+        try {
+            vCursor = pHandle.rawQuery(vCmd,null);
+        }
+        catch (Exception E) {
+            Log.i("CTRLGASTOSERR","Problemas na execucao da query " + E.getMessage());
+            return null;
+        }
 
         return vCursor;
 
@@ -340,18 +355,37 @@ public class Database {
     }
 
 
-
-    public ArrayList<String> obtemListaDespesas(SQLiteDatabase pHandle) {
+    /**
+     * Retorna uma lista de despesas na forma de um ArrayList<String>
+     * @param pHandle
+     * @param pCabecalhos
+     * @return
+     */
+    public ArrayList<String> obtemListaDespesas(SQLiteDatabase pHandle, String[] pCabecalhos) {
 
 
         String vCmd;
         String vStrDbg;
-        vCmd = "select * from despesa";
+        vCmd = "select d.seq_despesa as _id, cat_pai.ds_categoria, cat_filha.ds_categoria, d.dt_lancamento, d.vl_despesa ";
+        vCmd = vCmd + " from despesa d, categoria cat_filha, categoria cat_pai ";
+        vCmd = vCmd + " where d.id_categoria = cat_filha.id_categoria ";
+        vCmd = vCmd + " and cat_filha.id_categoria_pai = cat_pai.id_categoria ";
+        vCmd = vCmd + " order by d.dt_lancamento desc";
         Cursor c = pHandle.rawQuery(vCmd,null);
         ArrayList<String> arrListaResult;
 
 
+
         arrListaResult = new ArrayList<String>();
+
+        // Imprime os cabecalhos
+        // Print headers
+        arrListaResult.add(pCabecalhos[0]);
+        arrListaResult.add(pCabecalhos[1]);
+        arrListaResult.add(pCabecalhos[2]);
+        arrListaResult.add(pCabecalhos[3]);
+        arrListaResult.add(pCabecalhos[4]);
+
         if (c.moveToFirst()) {
 
             do {

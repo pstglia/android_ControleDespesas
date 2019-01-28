@@ -10,5 +10,12 @@
     <string name="rscNomeDatabase">dbcontrolegastos</string>
     <string name="rscMsgValidaData">A data precisa ser informada</string>
     <string name="rscMsgValidaValorGasto">O valor gasto deve ser informado</string>
+    <string name="rscMsgValorGastoInvalido">Valor gasto inválido</string>
+    <string name="rscColId">ID</string>
+    <string name="rscColCatPrinc">Cat. Principal</string>
+    <string name="rscColCatSec">Sub Cat</string>
+    <string name="rscColDtLanc">Dt Lanç.</string>
+    <string name="rscVlGasto">Vl. Gasto</string>
+    <string name="rscColVlGasto">Vl. Gasto</string>
 
 </resources>

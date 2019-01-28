@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.pstglia.controledegastos.database.Database;
 
+import java.io.FileDescriptor;
+
 
 public class Principal extends AppCompatActivity {
 

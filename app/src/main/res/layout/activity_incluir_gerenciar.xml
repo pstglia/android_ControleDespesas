@@ -16,70 +16,6 @@
         tools:layout_editor_absoluteY="73dp">
 
         <TextView
-            android:id="@+id/txtCustom3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="37dp"
-            android:text="MOD_SRC"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/edtCustom3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCustom2" />
-
-        <EditText
-            android:id="@+id/edtCustom3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toEndOf="@+id/txtCustom3"
-            app:layout_constraintTop_toBottomOf="@+id/edtCustom2" />
-
-        <EditText
-            android:id="@+id/edtCustom2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toEndOf="@+id/txtCustom2"
-            app:layout_constraintTop_toBottomOf="@+id/edtCustom1" />
-
-        <TextView
-            android:id="@+id/txtCustom2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="37dp"
-            android:text="MOD_SRC"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/edtCustom2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCustom1" />
-
-        <TextView
             android:id="@+id/txtDataId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,6 +68,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:spinnerMode="dialog"
             app:layout_constraintBottom_toBottomOf="@+id/txtCatPrinc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.9"
@@ -158,6 +95,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:spinnerMode="dialog"
             app:layout_constraintBottom_toBottomOf="@+id/txtCatSec"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.9"
@@ -222,6 +160,70 @@
             app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintStart_toEndOf="@+id/txtCustom1"
             app:layout_constraintTop_toBottomOf="@+id/edtValorGasto" />
+
+        <EditText
+            android:id="@+id/edtCustom2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@+id/txtCustom2"
+            app:layout_constraintTop_toBottomOf="@+id/edtCustom1" />
+
+        <TextView
+            android:id="@+id/txtCustom2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="37dp"
+            android:text="MOD_SRC"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/edtCustom2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCustom1" />
+
+        <EditText
+            android:id="@+id/edtCustom3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toEndOf="@+id/txtCustom3"
+            app:layout_constraintTop_toBottomOf="@+id/edtCustom2" />
+
+        <TextView
+            android:id="@+id/txtCustom3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="37dp"
+            android:text="MOD_SRC"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/edtCustom3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCustom2" />
 
         <ImageButton
             android:id="@+id/imgSalvar"

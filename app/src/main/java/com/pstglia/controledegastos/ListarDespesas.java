@@ -47,9 +47,17 @@ public class ListarDespesas extends AppCompatActivity {
     public void populaDespesas() {
 
         db = new Database();
+        String[] vCabecalhosArr = new String[5];
+
         final SQLiteDatabase pHandleDb = db.openDatabase(getDatabasePath(getString(R.string.rscNomeDatabase)).getAbsolutePath());
 
-        list = db.obtemListaDespesas(pHandleDb);
+        vCabecalhosArr[0] = getString(R.string.rscColId);
+        vCabecalhosArr[1] = getString(R.string.rscColCatPrinc);
+        vCabecalhosArr[2] = getString(R.string.rscColCatSec);
+        vCabecalhosArr[3] = getString(R.string.rscColDtLanc);
+        vCabecalhosArr[4] = getString(R.string.rscColVlGasto);
+
+        list = db.obtemListaDespesas(pHandleDb,vCabecalhosArr);
 
         db.closeDatabase(pHandleDb);
 

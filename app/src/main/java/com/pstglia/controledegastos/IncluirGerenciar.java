@@ -1,20 +1,14 @@
 package com.pstglia.controledegastos;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.icu.lang.UCharacter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.text.format.DateUtils;
-import android.text.format.Time;
 import android.util.Log;
-import android.util.TimeUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
@@ -22,14 +16,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.pstglia.controledegastos.database.Database;
 
-import java.lang.reflect.Array;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class IncluirGerenciar extends AppCompatActivity {
 
@@ -62,13 +53,18 @@ public class IncluirGerenciar extends AppCompatActivity {
         db = new Database();
         final SQLiteDatabase pHandleDb = db.openDatabase(getDatabasePath(getString(R.string.rscNomeDatabase)).getAbsolutePath());
 
+        if (pHandleDb == null) {
+
+            Toast.makeText(getApplicationContext(),"Problemas na conexao com o banco de dados",Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         // Mapeia elementos do activity (nesse ponto parece que voltei a usar o PHP-GTK :D )
         // Maps Activity elements (Seems at this point I returned using PHP-GTK :D )
         txtDataId = (TextView) findViewById(R.id.txtDataId);
         edtDataId = (EditText) findViewById(R.id.edtDataId);
-        cmbCatPrinc = (Spinner) findViewById(R.id.cmbCatPrinc);
-        cmbCatSec = (Spinner) findViewById(R.id.cmbCatSec);
+        cmbCatPrinc =  findViewById(R.id.cmbCatPrinc);
+        cmbCatSec = findViewById(R.id.cmbCatSec);
         edtValorGasto = (EditText) findViewById(R.id.edtValorGasto);
         imgSalvar = (ImageView) findViewById(R.id.imgSalvar);
         imgCancelar = (ImageView) findViewById(R.id.imgCancelar);
@@ -93,6 +89,9 @@ public class IncluirGerenciar extends AppCompatActivity {
         // Popula o spinner de categorias principais
         // Populate the main category spinner
         vCursor = db.obtemCategorias(pHandleDb, 0);
+
+
+
         SimpleCursorAdapter adapter1 = new SimpleCursorAdapter(
                 getApplicationContext(),
                 android.R.layout.simple_spinner_item,
@@ -100,7 +99,6 @@ public class IncluirGerenciar extends AppCompatActivity {
                 new String[] {"ds_categoria","_id"},
                 new int[]{android.R.id.text1},
                 0);
-
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cmbCatPrinc.setAdapter(adapter1);
 
@@ -191,6 +189,14 @@ public class IncluirGerenciar extends AppCompatActivity {
                                              if (edtValorGasto.getText().toString().isEmpty()) {
                                                  Toast.makeText(getApplicationContext() ,R.string.rscMsgValidaValorGasto,Toast.LENGTH_SHORT).show();
                                                  return;
+                                             }
+
+                                             try {
+                                                 Float.parseFloat(edtValorGasto.getText().toString());
+                                             }
+                                             catch (Exception e) {
+                                                Toast.makeText(getApplicationContext(), R.string.rscMsgValorGastoInvalido, Toast.LENGTH_SHORT).show();
+                                                return;
                                              }
 
                                              // Normaliza a data como YYYY-MM-DD
