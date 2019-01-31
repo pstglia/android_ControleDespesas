@@ -6,7 +6,7 @@
     <string name="rscCatPrinc">Categoria Principal</string>
     <string name="rscCatSec">Categoria Secundária</string>
     <string name="rscValor">Valor Gasto</string>
-    <string name="rscMsgProblemaInserir">Falha ao gravar despesa</string>
+    <string name="rscMsgProblemaInserir">Falha ao gravar no banco</string>
     <string name="rscNomeDatabase">dbcontrolegastos</string>
     <string name="rscMsgValidaData">A data precisa ser informada</string>
     <string name="rscMsgValidaValorGasto">O valor gasto deve ser informado</string>
@@ -17,5 +17,11 @@
     <string name="rscColDtLanc">Dt Lanç.</string>
     <string name="rscVlGasto">Vl. Gasto</string>
     <string name="rscColVlGasto">Vl. Gasto</string>
+    <string name="rscAdmCat">Gerenciar Categorias</string>
+    <string name="rscSalvar">Salvar</string>
+    <string name="rscMsgInformarCat">Informar Cat. Principal</string>
+    <string name="rscMsgInformarCatSec">Informar Cat. Secundária</string>
+    <string name="rscMsgCatJaExiste">Categoria já existe</string>
+    <string name="rscMsgConfirmaDel">Confirma a eexclusão?</string>
 
 </resources>

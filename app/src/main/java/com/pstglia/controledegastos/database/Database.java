@@ -303,6 +303,35 @@ public class Database {
 
     }
 
+    public ArrayList<String> listaCategorias(SQLiteDatabase pHandle) {
+
+        Cursor vCursor;
+        ArrayList<String> vCategoriasArr = new ArrayList<String>();
+
+        String vCmd;
+        vCmd = "select pai.ds_categoria, filha.ds_categoria ";
+        vCmd = vCmd + " from categoria pai, categoria filha  ";
+        vCmd = vCmd + " where filha.id_categoria_pai = pai.id_categoria";
+
+        try {
+            vCursor = pHandle.rawQuery(vCmd,null);
+        }
+        catch (Exception E) {
+            Log.i("CTRLGASTOSERR","Problemas na execucao da query " + E.getMessage());
+            return null;
+        }
+
+        if (vCursor.moveToFirst() ) {
+            do {
+                vCategoriasArr.add(vCursor.getString(0) + "-" + vCursor.getString(1));
+                            }
+            while (vCursor.moveToNext());
+        }
+
+        return vCategoriasArr;
+
+    }
+
     // Registra uma despesa no banco de dados
     // Parametros:
     // 1 - Handle de conexao com o banco
@@ -354,6 +383,49 @@ public class Database {
 
     }
 
+    /**
+     * Verifica se uma categoria existe e retorna seus ids (caso existam)
+     * @param pHandle
+     * @param pCatPai
+     * @param pCatSec
+     * @return
+     */
+    public String consultaCategoria(SQLiteDatabase pHandle, String pCatPai, String pCatSec) {
+
+
+        String vCmd;
+        String vStrRet;
+        String vIdCatPai;
+
+        vStrRet="";
+
+        // Consulta a categoria principal
+        vCmd = "select id_categoria from categoria where ds_categoria = '" +pCatPai+"'";
+        Cursor c = pHandle.rawQuery(vCmd,null);
+
+        if (c.moveToFirst()) {
+            vStrRet = c.getString(0);
+            vIdCatPai = vStrRet;
+        } else {
+            return "";
+        }
+
+        c.close();
+
+
+        // Consulta a categoria secundaria
+        vCmd = "select id_categoria from categoria ";
+        vCmd = vCmd + " where ds_categoria = '" +pCatSec+"' and id_categoria_pai = " + vIdCatPai;
+        c = pHandle.rawQuery(vCmd,null);
+
+        if (c.moveToFirst()) {
+            vStrRet = vStrRet + "@" + c.getString(0);
+
+        }
+
+        return vStrRet;
+
+    }
 
     /**
      * Retorna uma lista de despesas na forma de um ArrayList<String>
@@ -427,6 +499,62 @@ public class Database {
         }
 
         c.close();
+
+    }
+
+
+    /**
+     * Registra uma categoria pai/fila no banco
+     * @param pHandle
+     * @param pCatPai
+     * @param pCatFilha
+     * @param pIdCatPai
+     * @return
+     */
+    public Boolean insereCategoria(SQLiteDatabase pHandle, String pCatPai, String pCatFilha, String pIdCatPai) {
+
+
+        String vCmd;
+
+        if (pIdCatPai.length() == 0 || pIdCatPai == "0") {
+            vCmd = "insert into categoria (ds_categoria,qt_vl_custom, id_categoria_pai) ";
+            vCmd = vCmd + "values ( ";
+            vCmd = vCmd + "'" + pCatPai + "',0,null)";
+
+
+            try {
+                pHandle.execSQL(vCmd);
+
+                // Obtem o id da categoria inserida
+                vCmd = "select id_categoria from categoria where ds_categoria = '" + pCatPai + "'";
+
+                Cursor c = pHandle.rawQuery(vCmd, null);
+
+                if (!c.moveToFirst()) {
+                    return false;
+                } else {
+                    pIdCatPai = c.getString(0);
+                }
+
+            } catch (Exception e) {
+                Log.e("CTRLGASTOSERR", e.getMessage());
+                return false;
+            }
+        }
+
+        vCmd = "insert into categoria (ds_categoria,qt_vl_custom, id_categoria_pai) ";
+        vCmd = vCmd + "values ( ";
+        vCmd = vCmd + "'" + pCatFilha + "',0," + pIdCatPai + ")";
+
+        try {
+            pHandle.execSQL(vCmd);
+        } catch (Exception e) {
+            Log.e("CTRLGASTOSERR",e.getMessage());
+            return false;
+        }
+
+
+        return true;
 
     }
 

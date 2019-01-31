@@ -24,6 +24,7 @@ public class Principal extends AppCompatActivity {
 
         ImageView btnIncluir = (ImageView) findViewById(R.id.imgNovaDespesaId);
         ImageView btnGerenciar = (ImageView) findViewById(R.id.imgAdmDespesaId);
+        ImageView btnAdmCat = findViewById(R.id.imgAdmCategorias);
 
         btnIncluir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +47,14 @@ public class Principal extends AppCompatActivity {
                 Intent chamar = new Intent(Principal.this,ListarDespesas.class);
                 startActivity(chamar);
 
+            }
+        });
+
+        btnAdmCat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent chamar = new Intent(Principal.this,Categorias.class);
+                startActivity(chamar);
             }
         });
 
