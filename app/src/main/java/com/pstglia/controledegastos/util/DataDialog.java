@@ -1,4 +1,4 @@
-package com.pstglia.controledegastos;
+package com.pstglia.controledegastos.util;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -29,12 +29,37 @@ public class DataDialog extends DialogFragment
     private int paramEditTextId;
     private EditText edtParam;
 
-    private Calendar dataSelecionada;
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
 
     public void setEditTextParam(EditText edt) {
 
         edtParam = edt;
     }
+
+    private Calendar dataSelecionada;
 
     public void setDataSelecionada(Calendar pCalendar) {
         dataSelecionada = pCalendar;
@@ -59,10 +84,11 @@ public class DataDialog extends DialogFragment
     public void onDateSet(DatePicker view, int retYear, int retMonth, int retDay) {
         // Do something with the date chosen by the user
 
-        dataSelecionada.set(retYear,retMonth + 1,retDay);
+        if (edtParam != null) {
+            dataSelecionada.set(retYear, retMonth + 1, retDay);
 
-        edtParam.setText(DateUtils.formatDateTime(getActivity(), dataSelecionada.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR) );
-
+            edtParam.setText(DateUtils.formatDateTime(getActivity(), dataSelecionada.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR));
+        }
 
 
     }

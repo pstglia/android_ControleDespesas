@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Adapter;
 
@@ -23,7 +24,7 @@ public class ListarDespesas extends AppCompatActivity {
     private RecyclerView recycler;
     private RecyclerView.LayoutManager manager;
     private AdaptadorTabResult adapter;
-    private ArrayList<String> list=new ArrayList<>();
+    private ArrayList<String[]> list=new ArrayList<String[]>();
     private Database db;
 
     @Override
@@ -34,7 +35,9 @@ public class ListarDespesas extends AppCompatActivity {
 
         recycler = findViewById(R.id.recyclerView);
         recycler.setHasFixedSize(true);
-        manager = new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
+        //manager = new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
+        manager = new LinearLayoutManager(this);
+
         recycler.setLayoutManager(manager);
         populaDespesas();    //initialize your list in this method
         adapter = new AdaptadorTabResult(list,this);

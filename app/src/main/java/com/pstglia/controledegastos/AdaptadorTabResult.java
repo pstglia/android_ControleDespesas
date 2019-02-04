@@ -2,6 +2,7 @@ package com.pstglia.controledegastos;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,10 @@ import java.util.ArrayList;
  */
 public class AdaptadorTabResult extends RecyclerView.Adapter<AdaptadorTabResult.ViewHolder> {
 
-    private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<String[]> list = new ArrayList<String[]>();
     private Context context;
 
-    public AdaptadorTabResult(ArrayList<String> list, Context context) {
+    public AdaptadorTabResult(ArrayList<String[]> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -32,7 +33,16 @@ public class AdaptadorTabResult extends RecyclerView.Adapter<AdaptadorTabResult.
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textView.setText(list.get(position));
+
+        Log.i("CTRLGASTOSDBG","Qtde de itens no onBindViewHolder: " + String.valueOf(list.size())  );
+
+        if (list.size() > 0) {
+            holder.textView1.setText(list.get(position)[0]);
+            holder.textView2.setText(list.get(position)[1]);
+            holder.textView3.setText(list.get(position)[2]);
+            holder.textView4.setText(list.get(position)[3]);
+            holder.textView5.setText(list.get(position)[4]);
+        }
     }
     @Override
     public int getItemCount() {
@@ -40,10 +50,18 @@ public class AdaptadorTabResult extends RecyclerView.Adapter<AdaptadorTabResult.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private TextView textView1;
+        private TextView textView2;
+        private TextView textView3;
+        private TextView textView4;
+        private TextView textView5;
         public ViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.txtColuna);
+            textView1 = itemView.findViewById(R.id.txtColuna1);
+            textView2 = itemView.findViewById(R.id.txtColuna2);
+            textView3 = itemView.findViewById(R.id.txtColuna3);
+            textView4 = itemView.findViewById(R.id.txtColuna4);
+            textView5 = itemView.findViewById(R.id.txtColuna5);
         }
     }
 }

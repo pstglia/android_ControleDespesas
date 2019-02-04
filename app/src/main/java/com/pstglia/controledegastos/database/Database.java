@@ -10,6 +10,7 @@ import android.util.Log;
 import com.pstglia.controledegastos.R;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -303,6 +304,11 @@ public class Database {
 
     }
 
+    /**
+     * Retorna um ArrayList com as categorias pais e filhas separadas por hifen
+     * @param pHandle
+     * @return
+     */
     public ArrayList<String> listaCategorias(SQLiteDatabase pHandle) {
 
         Cursor vCursor;
@@ -433,40 +439,45 @@ public class Database {
      * @param pCabecalhos
      * @return
      */
-    public ArrayList<String> obtemListaDespesas(SQLiteDatabase pHandle, String[] pCabecalhos) {
+    public ArrayList<String[]> obtemListaDespesas(SQLiteDatabase pHandle, String[] pCabecalhos) {
 
 
         String vCmd;
         String vStrDbg;
+        int vContRegistro = 1;
         vCmd = "select d.seq_despesa as _id, cat_pai.ds_categoria, cat_filha.ds_categoria, d.dt_lancamento, d.vl_despesa ";
         vCmd = vCmd + " from despesa d, categoria cat_filha, categoria cat_pai ";
         vCmd = vCmd + " where d.id_categoria = cat_filha.id_categoria ";
         vCmd = vCmd + " and cat_filha.id_categoria_pai = cat_pai.id_categoria ";
         vCmd = vCmd + " order by d.dt_lancamento desc";
         Cursor c = pHandle.rawQuery(vCmd,null);
-        ArrayList<String> arrListaResult;
+        ArrayList<String[]> arrListaResult;
 
-
-
-        arrListaResult = new ArrayList<String>();
+        arrListaResult = new ArrayList<String[]>();
+        String[][] arrListaResultRegistro = new String[c.getCount() + 1][5];
 
         // Imprime os cabecalhos
         // Print headers
-        arrListaResult.add(pCabecalhos[0]);
-        arrListaResult.add(pCabecalhos[1]);
-        arrListaResult.add(pCabecalhos[2]);
-        arrListaResult.add(pCabecalhos[3]);
-        arrListaResult.add(pCabecalhos[4]);
+        arrListaResultRegistro[0][0] = pCabecalhos[0];
+        arrListaResultRegistro[0][1] = pCabecalhos[1];
+        arrListaResultRegistro[0][2] = pCabecalhos[2];
+        arrListaResultRegistro[0][3] = pCabecalhos[3];
+        arrListaResultRegistro[0][4] = pCabecalhos[4];
+
+        arrListaResult.add(arrListaResultRegistro[0]);
 
         if (c.moveToFirst()) {
 
             do {
 
-                arrListaResult.add(c.getString(0));
-                arrListaResult.add(c.getString(1));
-                arrListaResult.add(c.getString(2));
-                arrListaResult.add(c.getString(3));
-                arrListaResult.add(c.getString(4));
+                arrListaResultRegistro[vContRegistro][0] = c.getString(0);
+                arrListaResultRegistro[vContRegistro][1] = c.getString(1);
+                arrListaResultRegistro[vContRegistro][2] = c.getString(2);
+                arrListaResultRegistro[vContRegistro][3] = c.getString(3);
+                arrListaResultRegistro[vContRegistro][4] = c.getString(4);
+                //arrListaResultRegistro.clear();
+                arrListaResult.add(arrListaResultRegistro[vContRegistro]);
+                vContRegistro = vContRegistro + 1;
 
             } while (c.moveToNext());
 
@@ -558,5 +569,64 @@ public class Database {
 
     }
 
+    /**
+     * Remove uma categoria pela string da categoria pai e filha
+     * @param pHandle
+     * @param pCatPai
+     * @param pCatFilha
+     * @return
+     */
+    public Boolean removeCategoria(SQLiteDatabase pHandle, String pCatPai, String pCatFilha) {
+
+
+        String vCmd;
+        String vIdCatPai;
+
+        try {
+
+            vCmd = "select id_categoria_pai from categoria where ds_categoria = '" + pCatFilha + "'";
+
+            Cursor c = pHandle.rawQuery(vCmd, null);
+
+            if (!c.moveToFirst()) {
+                return false;
+            } else {
+                vIdCatPai = c.getString(0);
+            }
+
+        } catch (Exception e) {
+            Log.e("CTRLGASTOSERR", e.getMessage());
+            return false;
+        }
+
+
+        vCmd = "delete from  categoria where ds_categoria = '"+pCatFilha+"' and id_categoria_pai = " + vIdCatPai ;
+
+        try {
+            pHandle.execSQL(vCmd);
+        } catch (Exception e) {
+            Log.e("CTRLGASTOSERR", e.getMessage());
+            return false;
+        }
+
+        // Caso nenhuma categoria filha tenha sobrado, exclui a pai
+        vCmd = "select * from categoria where id_categoria_pai = " + vIdCatPai ;
+
+        Cursor c = pHandle.rawQuery(vCmd, null);
+
+        if (!c.moveToFirst()) {
+            vCmd = "delete from  categoria where id_categoria = " + vIdCatPai ;
+
+            try {
+                pHandle.execSQL(vCmd);
+            } catch (Exception e) {
+                Log.e("CTRLGASTOSERR", e.getMessage());
+                return false;
+            }
+
+        }
+
+        return true;
+    }
 
 }

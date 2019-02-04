@@ -2,6 +2,7 @@ package com.pstglia.controledegastos;
 
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +17,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pstglia.controledegastos.database.Database;
+import com.pstglia.controledegastos.util.ConfirmDialogExclusao;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Categorias extends AppCompatActivity {
+public class Categorias extends AppCompatActivity implements ConfirmDialogExclusao.ConfirmDialogExclusaoListener {
 
     private EditText edtCatPrinc;
     private EditText edtCatSec;
@@ -27,6 +30,9 @@ public class Categorias extends AppCompatActivity {
     private ListView lstCategorias;
     private ArrayList<String> arrCategorias;
     private ArrayAdapter<String> adaptador;
+    private long vIdSelecionadoLista;
+    Database db;
+    SQLiteDatabase pHandleDb;
 
 
 
@@ -40,8 +46,8 @@ public class Categorias extends AppCompatActivity {
         btnInserir = (Button) findViewById(R.id.btnAdicionar);
         lstCategorias = findViewById(R.id.lstCategorias);
 
-        final Database db = new Database();
-        final SQLiteDatabase pHandleDb = db.openDatabase(getDatabasePath(getString(R.string.rscNomeDatabase)).getAbsolutePath());
+        db = new Database();
+        pHandleDb = db.openDatabase(getDatabasePath(getString(R.string.rscNomeDatabase)).getAbsolutePath());
         arrCategorias = new ArrayList<>();
 
         arrCategorias = db.listaCategorias(pHandleDb);
@@ -90,10 +96,40 @@ public class Categorias extends AppCompatActivity {
         lstCategorias.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("CTRLGASTOSDBG","Clique longo");
-                return false;
+
+                ConfirmDialogExclusao dialogExclusao = new ConfirmDialogExclusao();
+
+                dialogExclusao.show(getSupportFragmentManager(),"ConfirmaExcl");
+                vIdSelecionadoLista = id;
+
+                return true;
             }
         });
 
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        Log.i("CTRLGASTOSDBG","Valor selecionado: " + String.valueOf(vIdSelecionadoLista));
+        String sValor = adaptador.getItem(Integer.valueOf(String.valueOf(vIdSelecionadoLista)));
+        Log.i("CTRLGASTOSDBG","Valor selecionado: " + sValor);
+
+        // Remove do banco
+        String[] arr = sValor.split("-");
+        db.removeCategoria(pHandleDb,arr[0],arr[1]);
+
+        adaptador.remove(sValor);
+        adaptador.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        db.closeDatabase(pHandleDb);
+        super.onDestroy();
     }
 }

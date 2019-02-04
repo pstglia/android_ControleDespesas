@@ -23,5 +23,6 @@
     <string name="rscMsgInformarCatSec">Informar Cat. Secundária</string>
     <string name="rscMsgCatJaExiste">Categoria já existe</string>
     <string name="rscMsgConfirmaDel">Confirma a eexclusão?</string>
+    <string name="msgConfirmaExclusao">Confirma a exclusão:?</string>
 
 </resources>
