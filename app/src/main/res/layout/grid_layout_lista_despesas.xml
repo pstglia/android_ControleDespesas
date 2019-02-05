@@ -1,84 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayPai"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
-    android:clickable="true"
-    android:padding=".5dp">
+    android:clickable="false"
+    android:orientation="horizontal"
+    android:padding=".5dp"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp">
 
     <TextView
         android:id="@+id/txtColuna1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="0dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="0dp"
-        android:background="@android:color/white"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
         android:gravity="center|center_horizontal|center_vertical"
-        android:paddingLeft="5dp"
-        android:text="AAAAAAAA" />
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp" />
 
     <LinearLayout
         android:id="@+id/linearLay1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/txtColuna1"
-        android:layout_toRightOf="@+id/txtColuna1"
+        android:layout_weight="4"
         android:orientation="vertical"
-        android:paddingLeft="20dp">
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp">
 
         <TextView
             android:id="@+id/txtColuna2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:background="@android:color/white"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="BBBBBBB" />
+            android:background="@color/colorAccent"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp" />
 
         <TextView
             android:id="@+id/txtColuna3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:paddingLeft="5dp"
-            android:text="CCCCCCCCC" />
+            android:background="@color/colorAccent"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp" />
 
     </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/linearLay2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/linearLay1"
-        android:layout_toRightOf="@+id/linearLay2"
+        android:layout_weight="4"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp">
 
         <TextView
             android:id="@+id/txtColuna4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:background="@android:color/white"
-            android:paddingLeft="5dp"
-            android:text="DDDDDDDD" />
+            android:background="@color/colorAccent"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp" />
 
         <TextView
             android:id="@+id/txtColuna5"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:paddingLeft="5dp"
-            android:text="EEEEEEEE" />
+            android:background="@color/colorAccent"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgDelLinha"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:clickable="true"
+        android:contentDescription="@string/msgConfirmaExclusao"
+        android:focusable="auto"
+        app:srcCompat="@android:drawable/ic_delete" />
 
-</RelativeLayout>
+
+</LinearLayout>

@@ -364,6 +364,24 @@ public class Database {
 
     }
 
+    public Boolean removeDespesa(SQLiteDatabase pHandle, String pSeqDespesa) {
+
+
+        String vCmd;
+        vCmd = "delete from  despesa where seq_despesa = " + pSeqDespesa;
+
+        try {
+            pHandle.execSQL(vCmd);
+        } catch (Exception e) {
+            Log.e("CTRLGASTOSERR",e.getMessage());
+            return false;
+        }
+
+        return true;
+
+    }
+
+
     // Relaciona a quantidade de campos adicionais de uma categoria
     // Parametros:
     // 1 - Handle de conexao com o banco
@@ -444,7 +462,7 @@ public class Database {
 
         String vCmd;
         String vStrDbg;
-        int vContRegistro = 1;
+        int vContRegistro = 0;
         vCmd = "select d.seq_despesa as _id, cat_pai.ds_categoria, cat_filha.ds_categoria, d.dt_lancamento, d.vl_despesa ";
         vCmd = vCmd + " from despesa d, categoria cat_filha, categoria cat_pai ";
         vCmd = vCmd + " where d.id_categoria = cat_filha.id_categoria ";
@@ -458,13 +476,13 @@ public class Database {
 
         // Imprime os cabecalhos
         // Print headers
-        arrListaResultRegistro[0][0] = pCabecalhos[0];
+        /*arrListaResultRegistro[0][0] = pCabecalhos[0];
         arrListaResultRegistro[0][1] = pCabecalhos[1];
         arrListaResultRegistro[0][2] = pCabecalhos[2];
         arrListaResultRegistro[0][3] = pCabecalhos[3];
         arrListaResultRegistro[0][4] = pCabecalhos[4];
 
-        arrListaResult.add(arrListaResultRegistro[0]);
+        arrListaResult.add(arrListaResultRegistro[0]);*/
 
         if (c.moveToFirst()) {
 

@@ -6,7 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.pstglia.controledegastos.interfaces.CliqueBotaoRecycler;
 
 import java.util.ArrayList;
 /**
@@ -19,10 +23,12 @@ public class AdaptadorTabResult extends RecyclerView.Adapter<AdaptadorTabResult.
 
     private ArrayList<String[]> list = new ArrayList<String[]>();
     private Context context;
+    private static CliqueBotaoRecycler mListener;
 
-    public AdaptadorTabResult(ArrayList<String[]> list, Context context) {
+    public AdaptadorTabResult(ArrayList<String[]> list, Context context, CliqueBotaoRecycler pBotaoClicked) {
         this.list = list;
         this.context = context;
+        this.mListener = pBotaoClicked;
     }
 
     @Override
@@ -49,12 +55,18 @@ public class AdaptadorTabResult extends RecyclerView.Adapter<AdaptadorTabResult.
         return list.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public void remove(int posicao) {
+        list.remove(posicao);
+    }
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView textView1;
         private TextView textView2;
         private TextView textView3;
         private TextView textView4;
         private TextView textView5;
+        private ImageView imgDelLinha;
         public ViewHolder(View itemView) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.txtColuna1);
@@ -62,6 +74,14 @@ public class AdaptadorTabResult extends RecyclerView.Adapter<AdaptadorTabResult.
             textView3 = itemView.findViewById(R.id.txtColuna3);
             textView4 = itemView.findViewById(R.id.txtColuna4);
             textView5 = itemView.findViewById(R.id.txtColuna5);
+            imgDelLinha = itemView.findViewById(R.id.imgDelLinha);
+            imgDelLinha.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            String vId = textView1.getText().toString();
+            mListener.botaoClicado(v,vId,getAdapterPosition());
         }
     }
 }
