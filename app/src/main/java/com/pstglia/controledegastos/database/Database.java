@@ -454,10 +454,9 @@ public class Database {
     /**
      * Retorna uma lista de despesas na forma de um ArrayList<String>
      * @param pHandle
-     * @param pCabecalhos
      * @return
      */
-    public ArrayList<String[]> obtemListaDespesas(SQLiteDatabase pHandle, String[] pCabecalhos) {
+    public void obtemListaDespesas(SQLiteDatabase pHandle, String pDataDe, String pDataAte,ArrayList<String[]> pArr) {
 
 
         String vCmd;
@@ -467,11 +466,19 @@ public class Database {
         vCmd = vCmd + " from despesa d, categoria cat_filha, categoria cat_pai ";
         vCmd = vCmd + " where d.id_categoria = cat_filha.id_categoria ";
         vCmd = vCmd + " and cat_filha.id_categoria_pai = cat_pai.id_categoria ";
-        vCmd = vCmd + " order by d.dt_lancamento desc";
-        Cursor c = pHandle.rawQuery(vCmd,null);
-        ArrayList<String[]> arrListaResult;
 
-        arrListaResult = new ArrayList<String[]>();
+        vCmd = vCmd + " and d.dt_lancamento >= '" + pDataDe + "'";
+        vCmd = vCmd + " and d.dt_lancamento <= '" + pDataAte + "'";
+
+        vCmd = vCmd + " order by d.dt_lancamento desc";
+
+        Log.i("CTRLGASTOSDBG",vCmd);
+        Cursor c = pHandle.rawQuery(vCmd,null);
+        ArrayList<String[]> arrListaResult = pArr;
+        arrListaResult.clear();
+
+
+        //arrListaResult = new ArrayList<String[]>();
         String[][] arrListaResultRegistro = new String[c.getCount() + 1][5];
 
         // Imprime os cabecalhos
@@ -503,7 +510,8 @@ public class Database {
 
         c.close();
 
-        return arrListaResult;
+        Log.i("CTRLGASTOSDGB","Retorno despesas: " + arrListaResult.size());
+        //return arrListaResult;
 
     }
 

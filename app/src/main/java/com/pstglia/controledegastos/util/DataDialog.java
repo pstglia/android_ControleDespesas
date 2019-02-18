@@ -1,7 +1,9 @@
 package com.pstglia.controledegastos.util;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateUtils;
@@ -21,13 +23,14 @@ import java.util.GregorianCalendar;
  * https://stackoverflow.com/questions/11754663/android-datepicker-fragment-how-to-do-something-when-the-user-sets-a-date
  */
 public class DataDialog extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener {
+{
 
     private int year;
     private int month;
     private int day;
     private int paramEditTextId;
-    private EditText edtParam;
+    //private EditText edtParam;
+    private DatePickerDialog.OnDateSetListener mContext;
 
     public int getYear() {
         return year;
@@ -53,17 +56,17 @@ public class DataDialog extends DialogFragment
         this.day = day;
     }
 
-
-    public void setEditTextParam(EditText edt) {
+    /*public void setEditTextParam(EditText edt) {
 
         edtParam = edt;
-    }
+    }*/
 
-    private Calendar dataSelecionada;
 
-    public void setDataSelecionada(Calendar pCalendar) {
+   // private Calendar dataSelecionada;
+
+    /*public void setDataSelecionada(Calendar pCalendar) {
         dataSelecionada = pCalendar;
-    }
+    }*/
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -73,23 +76,32 @@ public class DataDialog extends DialogFragment
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        if (edtParam == null) {
+        /*if (edtParam == null) {
             return null;
-        }
+        }*/
 
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        return new DatePickerDialog(getContext(),  mContext, year, month, day);
     }
 
-    public void onDateSet(DatePicker view, int retYear, int retMonth, int retDay) {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof DatePickerDialog.OnDateSetListener){
+            mContext= (DatePickerDialog.OnDateSetListener)context;
+        }
+
+    }
+
+    /*  public void onDateSet(DatePicker view, int retYear, int retMonth, int retDay) {
         // Do something with the date chosen by the user
 
         if (edtParam != null) {
-            dataSelecionada.set(retYear, retMonth + 1, retDay);
+            dataSelecionada.set(retYear, retMonth, retDay);
 
             edtParam.setText(DateUtils.formatDateTime(getActivity(), dataSelecionada.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR));
         }
 
 
-    }
+    }*/
 }

@@ -1,5 +1,6 @@
 package com.pstglia.controledegastos;
 
+import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.icu.lang.UCharacter;
@@ -9,6 +10,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
@@ -23,7 +25,7 @@ import com.pstglia.controledegastos.util.DataDialog;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class IncluirGerenciar extends AppCompatActivity {
+public class IncluirGerenciar extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private TextView txtDataId;
     private EditText edtDataId;
@@ -79,10 +81,10 @@ public class IncluirGerenciar extends AppCompatActivity {
 
         // Instancia a caixa de dialogo
         newFragment = new DataDialog();
-        newFragment.setEditTextParam(edtDataId);
+        //newFragment.setEditTextParam(edtDataId);
 
         dataSelecionada = Calendar.getInstance();
-        newFragment.setDataSelecionada(dataSelecionada);
+        //newFragment.setDataSelecionada(dataSelecionada);
 
         final Calendar c = Calendar.getInstance();
         edtDataId.setText(DateUtils.formatDateTime(this, c.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR));
@@ -246,5 +248,11 @@ public class IncluirGerenciar extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        dataSelecionada.set(year, month, dayOfMonth);
+
+        edtDataId.setText(DateUtils.formatDateTime(getApplicationContext(), dataSelecionada.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_SHOW_YEAR));
+    }
 }
 

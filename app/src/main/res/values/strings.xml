@@ -24,5 +24,8 @@
     <string name="rscMsgCatJaExiste">Categoria já existe</string>
     <string name="rscMsgConfirmaDel">Confirma a eexclusão?</string>
     <string name="msgConfirmaExclusao">Confirma a exclusão:?</string>
+    <string name="rscDataDe">De</string>
+    <string name="rscDataAte">Até</string>
+    <string name="rscSoma">Soma</string>
 
 </resources>
