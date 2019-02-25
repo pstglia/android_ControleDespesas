@@ -27,5 +27,7 @@
     <string name="rscDataDe">De</string>
     <string name="rscDataAte">Até</string>
     <string name="rscSoma">Soma</string>
+    <string name="rscMsgCatRemovida">Categoria removida</string>
+    <string name="rscMsgCatNaoPermitidos">Não use @ ou - no nome das categorias</string>
 
 </resources>

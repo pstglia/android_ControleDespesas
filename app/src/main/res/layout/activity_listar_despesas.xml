@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
@@ -38,11 +38,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/rscDataDe"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/edtDataDe"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:text="@string/rscDataAte"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
@@ -72,10 +71,11 @@
             android:focusable="false"
             android:inputType="date"
             android:onClick="showDatePickerDialog"
+            app:layout_constraintBottom_toBottomOf="@+id/txtDataIdAte"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/txtDataIdAte"
-            app:layout_constraintTop_toBottomOf="@+id/edtDataDe" />
+            app:layout_constraintTop_toTopOf="@+id/txtDataIdAte" />
 
         <TextView
             android:id="@+id/txtCatPrinc"
@@ -83,7 +83,7 @@
             android:layout_height="22dp"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="32dp"
             android:text="@string/rscCatPrinc"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
@@ -111,7 +111,7 @@
             android:id="@+id/txtSoma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
@@ -138,13 +138,29 @@
             app:layout_constraintStart_toEndOf="@+id/txtCatPrinc"
             app:layout_constraintTop_toTopOf="@+id/txtCatPrinc" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtValorTotal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

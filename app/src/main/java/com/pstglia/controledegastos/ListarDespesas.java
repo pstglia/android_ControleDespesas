@@ -13,6 +13,8 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
@@ -59,6 +61,8 @@ public class ListarDespesas extends AppCompatActivity implements CliqueBotaoRecy
     private Database db;
     private String vIdSelecionadoLista;
     private int posicaoSelecionadaLista = -1;
+
+    private int vIdCategoriaSelected = 0;
 
     // Indica o campo de data que foi clicado
     // (1 campo De ; 2 campo Ate)
@@ -108,8 +112,7 @@ public class ListarDespesas extends AppCompatActivity implements CliqueBotaoRecy
         String[] vCabecalhosArr = new String[5];
 
         final SQLiteDatabase pHandleDb = db.openDatabase(getDatabasePath(getString(R.string.rscNomeDatabase)).getAbsolutePath());
-        vCursor = db.obtemCategorias(pHandleDb, 0);
-
+        vCursor = db.obtemCategorias(pHandleDb, 0, 1);
 
 
         SimpleCursorAdapter adapter1 = new SimpleCursorAdapter(
@@ -124,6 +127,21 @@ public class ListarDespesas extends AppCompatActivity implements CliqueBotaoRecy
 
         db.closeDatabase(pHandleDb);
 
+
+        cmbCatPrinc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                vIdCategoriaSelected =  Integer.parseInt(String.valueOf(id));
+                populaDespesas();
+                adapter.notifyDataSetChanged();
+                somaDespesasListadas();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //manager = new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false);
         manager = new LinearLayoutManager(this);
@@ -151,7 +169,7 @@ public class ListarDespesas extends AppCompatActivity implements CliqueBotaoRecy
         String sDataDe = fmt.format(dataSelecionadaDe.getTime());
         String sDataAte = fmt.format(dataSelecionadaAte.getTime());
 
-        db.obtemListaDespesas(pHandleDb, sDataDe, sDataAte,list);
+        db.obtemListaDespesas(pHandleDb, sDataDe, sDataAte,vIdCategoriaSelected, list);
 
         db.closeDatabase(pHandleDb);
 
@@ -171,7 +189,7 @@ public class ListarDespesas extends AppCompatActivity implements CliqueBotaoRecy
 
        }
 
-       txtSoma.setText( String.valueOf(vSoma) );
+       txtSoma.setText(String.format("%.2f",vSoma) );
     }
 
     @Override

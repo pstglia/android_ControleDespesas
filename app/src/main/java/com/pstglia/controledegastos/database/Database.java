@@ -181,7 +181,7 @@ public class Database {
 
                 vCmd = "insert into categoria (id_categoria, ds_categoria, id_categoria_pai,";
                 vCmd = vCmd + " qt_vl_custom,ds_custom_1) values ( ";
-                vCmd = vCmd + " 2, 'COMBUSTIVEL',1, 1, 'LITROS'); ";
+                vCmd = vCmd + " 2, 'COMBUSTIVEL',1, 0, NULL); ";
                 pHandle.execSQL(vCmd);
 
                 vCmd = "insert into categoria (id_categoria, ds_categoria, id_categoria_pai,";
@@ -275,14 +275,19 @@ public class Database {
     // 2 - Parent category (0 = Lists justs parent categories)
     // Return:
     // Item results cursor
-    public Cursor obtemCategorias(SQLiteDatabase pHandle, int pIdCatPai) {
+    public Cursor obtemCategorias(SQLiteDatabase pHandle, int pIdCatPai, int pTodas) {
 
 
         Cursor vCursor;
         ArrayList<String> vCategoriasArr = new ArrayList<String>();
 
-        String vCmd;
-        vCmd = "select ds_categoria, id_categoria as _id from categoria where ";
+        String vCmd = "";
+
+        if (pTodas == 1) {
+            vCmd = "select '-TODAS-' as ds_categoria,0 as _id UNION ALL ";
+        }
+
+        vCmd = vCmd + "select ds_categoria, id_categoria as _id from categoria where ";
 
         if (pIdCatPai == 0) {
             vCmd = vCmd + " id_categoria_pai is null";
@@ -456,7 +461,7 @@ public class Database {
      * @param pHandle
      * @return
      */
-    public void obtemListaDespesas(SQLiteDatabase pHandle, String pDataDe, String pDataAte,ArrayList<String[]> pArr) {
+    public void obtemListaDespesas(SQLiteDatabase pHandle, String pDataDe, String pDataAte, int pCatPrinc,ArrayList<String[]> pArr) {
 
 
         String vCmd;
@@ -470,6 +475,12 @@ public class Database {
         vCmd = vCmd + " and d.dt_lancamento >= '" + pDataDe + "'";
         vCmd = vCmd + " and d.dt_lancamento <= '" + pDataAte + "'";
 
+        if (pCatPrinc > 0) {
+
+            vCmd = vCmd + " and cat_pai.id_categoria = " + String.valueOf(pCatPrinc);
+
+        }
+
         vCmd = vCmd + " order by d.dt_lancamento desc";
 
         Log.i("CTRLGASTOSDBG",vCmd);
@@ -481,15 +492,6 @@ public class Database {
         //arrListaResult = new ArrayList<String[]>();
         String[][] arrListaResultRegistro = new String[c.getCount() + 1][5];
 
-        // Imprime os cabecalhos
-        // Print headers
-        /*arrListaResultRegistro[0][0] = pCabecalhos[0];
-        arrListaResultRegistro[0][1] = pCabecalhos[1];
-        arrListaResultRegistro[0][2] = pCabecalhos[2];
-        arrListaResultRegistro[0][3] = pCabecalhos[3];
-        arrListaResultRegistro[0][4] = pCabecalhos[4];
-
-        arrListaResult.add(arrListaResultRegistro[0]);*/
 
         if (c.moveToFirst()) {
 

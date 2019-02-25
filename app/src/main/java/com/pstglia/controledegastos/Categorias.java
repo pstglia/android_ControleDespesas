@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -63,6 +64,10 @@ public class Categorias extends AppCompatActivity implements ConfirmDialogExclus
 
                 String vStrRet;
                 String vIdCatPai;
+
+                String sCatPaiInsert;
+                String sCatSecInsert;
+
                 if (edtCatPrinc.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(),R.string.rscMsgInformarCat,Toast.LENGTH_LONG).show();
                     return;
@@ -72,7 +77,19 @@ public class Categorias extends AppCompatActivity implements ConfirmDialogExclus
                     return;
                 }
 
-                vStrRet = db.consultaCategoria(pHandleDb,edtCatPrinc.getText().toString(),edtCatSec.getText().toString());
+
+                // Remove hifens e @, porque eu uso essas m*...
+                // Eu avisei no github que esse codigo é tosco :D
+                sCatPaiInsert = edtCatPrinc.getText().toString();
+                sCatPaiInsert = sCatPaiInsert.replaceAll("@","");
+                sCatPaiInsert = sCatPaiInsert.replaceAll("-","");
+
+                sCatSecInsert = edtCatSec.getText().toString();
+                sCatSecInsert = sCatSecInsert.replaceAll("@","");
+                sCatSecInsert = sCatSecInsert.replaceAll("-","");
+
+
+                vStrRet = db.consultaCategoria(pHandleDb,sCatPaiInsert,sCatSecInsert);
 
                 // Se o retorno forem 2 valores (separados por @) entao o valor ja esta cadastrado
                 if (vStrRet.contains("@")) {
@@ -82,12 +99,22 @@ public class Categorias extends AppCompatActivity implements ConfirmDialogExclus
                     vIdCatPai = vStrRet;
                 }
 
-                if (!db.insereCategoria(pHandleDb,edtCatPrinc.getText().toString(),edtCatSec.getText().toString(),vIdCatPai)) {
-                    Toast.makeText(getApplicationContext(),R.string.rscMsgProblemaInserir,Toast.LENGTH_LONG).show();
-                    return;
-                } else {
-                    arrCategorias.add(edtCatPrinc.getText().toString() + "-" + edtCatSec.getText().toString());
-                    adaptador.notifyDataSetChanged();
+
+
+                if (sCatPaiInsert.length() == 0 || sCatSecInsert.length() == 0) {
+                    Toast.makeText(getApplicationContext(), R.string.rscMsgCatNaoPermitidos, Toast.LENGTH_LONG).show();
+                }
+                else {
+
+
+                    if (!db.insereCategoria(pHandleDb, sCatPaiInsert, sCatSecInsert, vIdCatPai)) {
+                        Toast.makeText(getApplicationContext(), R.string.rscMsgProblemaInserir, Toast.LENGTH_LONG).show();
+                        return;
+                    } else {
+                        arrCategorias.add(edtCatPrinc.getText().toString() + "-" + edtCatSec.getText().toString());
+                        adaptador.notifyDataSetChanged();
+                    }
+
                 }
 
             }
@@ -120,6 +147,9 @@ public class Categorias extends AppCompatActivity implements ConfirmDialogExclus
 
         adaptador.remove(sValor);
         adaptador.notifyDataSetChanged();
+
+        Toast.makeText(getApplicationContext(),R.string.rscMsgCatRemovida, Toast.LENGTH_LONG).show();
+
     }
 
     @Override

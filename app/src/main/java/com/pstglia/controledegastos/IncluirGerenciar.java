@@ -91,7 +91,7 @@ public class IncluirGerenciar extends AppCompatActivity implements DatePickerDia
 
         // Popula o spinner de categorias principais
         // Populate the main category spinner
-        vCursor = db.obtemCategorias(pHandleDb, 0);
+        vCursor = db.obtemCategorias(pHandleDb, 0,0);
 
 
 
@@ -113,7 +113,7 @@ public class IncluirGerenciar extends AppCompatActivity implements DatePickerDia
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("CTRLGASTOSDBG",String.valueOf(id));
-                vCursor2 = db.obtemCategorias(pHandleDb, Integer.valueOf(String.valueOf(id)));
+                vCursor2 = db.obtemCategorias(pHandleDb, Integer.valueOf(String.valueOf(id)),0);
 
                 SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(
                         getApplicationContext(),
